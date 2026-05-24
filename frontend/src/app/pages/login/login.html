@@ -1,0 +1,32 @@
+<div class="login-container">
+
+  <div class="login-card">
+
+    <h1>HireMind AI</h1>
+
+    <p>Welcome back</p>
+
+    <input
+      type="email"
+      placeholder="Email Address"
+      [(ngModel)]="email"
+    >
+
+    <input
+      type="password"
+      placeholder="Password"
+      [(ngModel)]="password"
+    >
+
+    <button (click)="login()">
+      Login
+    </button>
+
+    <span>
+      Don't have an account?
+      <a routerLink="/register">Register</a>
+    </span>
+
+  </div>
+
+</div>
