@@ -13,14 +13,5 @@ import { NavbarComponent } from '../../components/navbar/navbar';
 })
 
 export class DashboardComponent {
-  
-  logout() {
-  localStorage.removeItem('token');
- }
 
- isSidebarOpen = true;
-
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
 }
