@@ -13,6 +13,9 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 
+const jobRoutes = require("./routes/jobRoutes");
+app.use("/api/jobs", jobRoutes);
+
 app.get("/", (req, res) => {
     res.send("HireMind AI Backend Running");
 });
