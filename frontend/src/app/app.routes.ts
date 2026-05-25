@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login';
 import { RegisterComponent } from './pages/register/register';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
+import { JobsComponent } from './pages/jobs/jobs';
 
 export const routes: Routes = [
 
@@ -26,6 +27,12 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [authGuard]
+  },
+
+  {
+  path: 'jobs',
+  component: JobsComponent,
+  canActivate: [authGuard]
   },
 
   {

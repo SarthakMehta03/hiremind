@@ -1,0 +1,145 @@
+<div class="jobs-layout">
+
+  <!-- SIDEBAR -->
+  <app-sidebar></app-sidebar>
+
+  <!-- MAIN CONTENT -->
+  <div class="jobs-main">
+
+    <!-- NAVBAR -->
+    <app-navbar></app-navbar>
+
+    <!-- PAGE CONTENT -->
+    <div class="jobs-page">
+
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+
+        <div>
+          <h1>Job Management</h1>
+          <p>
+            Manage recruitment openings
+          </p>
+        </div>
+
+        <button class="header-btn">
+          + Add New Job
+        </button>
+
+      </div>
+
+      <!-- FORM CARD -->
+      <div class="form-card">
+
+        <h2>Create Job</h2>
+
+        <div class="job-form">
+
+          <input
+            type="text"
+            placeholder="Job Title"
+            [(ngModel)]="title"
+          />
+
+          <input
+            type="text"
+            placeholder="Company"
+            [(ngModel)]="company"
+          />
+
+          <input
+            type="text"
+            placeholder="Location"
+            [(ngModel)]="location"
+          />
+
+          <input
+            type="text"
+            placeholder="Salary"
+            [(ngModel)]="salary"
+          />
+
+          <button (click)="createJob()">
+            Create Job
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- JOBS SECTION -->
+      <div class="jobs-section">
+
+        <div class="section-header">
+
+          <h2>Available Jobs</h2>
+
+          <span>
+            {{ jobs.length }} Jobs
+          </span>
+
+        </div>
+
+        <!-- JOB LIST -->
+        <div class="job-list">
+
+          <div
+            class="job-card"
+            *ngFor="let job of jobs; trackBy: trackByJob"
+          >
+
+            <div class="job-top">
+
+              <div>
+
+                <h3>{{ job.title }}</h3>
+
+                <p class="company">
+                  {{ job.company }}
+                </p>
+
+              </div>
+
+              <span class="salary">
+                {{ job.salary }}
+              </span>
+
+            </div>
+
+            <div class="job-info">
+
+              <p>
+                📍 {{ job.location }}
+              </p>
+
+            </div>
+
+            <div class="job-actions">
+
+              <button
+                class="edit-btn"
+                (click)="editJob(job)"
+                >
+                Edit
+               </button>
+
+              <button
+                class="delete-btn"
+                (click)="deleteJob(job._id)"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
