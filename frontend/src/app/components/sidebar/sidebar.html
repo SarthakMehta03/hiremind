@@ -1,0 +1,74 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+
+  <!-- Top Section -->
+  <div class="logo-section">
+
+    <!-- Toggle Button -->
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      ☰
+    </button>
+
+    <!-- Logo -->
+    <div class="logo-circle">
+      H
+    </div>
+
+    <!-- Text -->
+    <div class="logo-text" *ngIf="!isCollapsed">
+      <h3>HireMind AI</h3>
+      <span>Recruitment Panel</span>
+    </div>
+
+  </div>
+
+  <!-- Menu -->
+  <ul class="menu">
+
+    <li class="active">
+      <i class="fa-solid fa-house"></i>
+      <span *ngIf="!isCollapsed">Dashboard</span>
+    </li>
+
+    <li>
+      <i class="fa-solid fa-briefcase"></i>
+      <span *ngIf="!isCollapsed">Jobs</span>
+    </li>
+
+    <li>
+      <i class="fa-solid fa-users"></i>
+      <span *ngIf="!isCollapsed">Candidates</span>
+    </li>
+
+    <li>
+      <i class="fa-solid fa-chart-line"></i>
+      <span *ngIf="!isCollapsed">Analytics</span>
+    </li>
+
+    <li>
+      <i class="fa-solid fa-gear"></i>
+      <span *ngIf="!isCollapsed">Settings</span>
+    </li>
+
+  </ul>
+
+  <div class="logout-btn" (click)="logout()">
+
+  <i class="fa-solid fa-right-from-bracket"></i>
+
+  <span *ngIf="!isCollapsed">Logout</span>
+
+</div>
+
+  <!-- Bottom User -->
+  <div class="profile-section">
+
+    <img src="https://i.pravatar.cc/40" alt="">
+
+    <div class="profile-info" *ngIf="!isCollapsed">
+      <h4>John Doe</h4>
+      <p>admin@gmail.com</p>
+    </div>
+
+  </div>
+
+</div>
