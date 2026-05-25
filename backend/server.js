@@ -16,6 +16,9 @@ app.use("/api/auth", authRoutes);
 const jobRoutes = require("./routes/jobRoutes");
 app.use("/api/jobs", jobRoutes);
 
+const candidateRoutes = require("./routes/candidateRoutes");
+app.use("/api/candidates",candidateRoutes);
+
 app.get("/", (req, res) => {
     res.send("HireMind AI Backend Running");
 });

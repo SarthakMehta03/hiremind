@@ -4,6 +4,7 @@ import { RegisterComponent } from './pages/register/register';
 import { DashboardComponent } from './pages/dashboard/dashboard';
 import { authGuard } from './guards/auth-guard';
 import { JobsComponent } from './pages/jobs/jobs';
+import { CandidatesComponent } from './pages/candidates/candidates';
 
 export const routes: Routes = [
 
@@ -32,6 +33,12 @@ export const routes: Routes = [
   {
   path: 'jobs',
   component: JobsComponent,
+  canActivate: [authGuard]
+  },
+
+  {
+  path: 'candidates',
+  component: CandidatesComponent,
   canActivate: [authGuard]
   },
 
