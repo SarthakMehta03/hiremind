@@ -25,6 +25,8 @@ app.use("/api/dashboard", dashboardRoutes);
 const aiRoutes = require("./routes/aiRoutes");
 app.use("/api/ai",aiRoutes);
 
+app.use("/uploads", express.static("uploads"));
+
 app.get("/", (req, res) => {
     res.send("HireMind AI Backend Running");
 });
@@ -37,6 +39,7 @@ mongoose.connect(process.env.MONGO_URI)
 .catch((err) => {
     console.log(err);
 });
+
 
 app.get("/api/protected", protect, (req, res) => {
 

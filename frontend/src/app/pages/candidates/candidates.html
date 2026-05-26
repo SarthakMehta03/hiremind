@@ -30,7 +30,14 @@
       <!-- FORM -->
       <div class="form-card">
 
-        <h2>Add Candidate</h2>
+        <h2>
+
+          {{ isEditing
+            ? 'Edit Candidate'
+            : 'Add Candidate'
+          }}
+
+        </h2>
 
         <div class="candidate-form">
 
@@ -58,10 +65,21 @@
             [(ngModel)]="experience"
           />
 
+          <!-- RESUME INPUT -->
+          <input
+            type="file"
+            (change)="onFileSelected($event)"
+          />
+
           <button
             (click)="createCandidate()"
           >
-            Add Candidate
+
+            {{ isEditing
+              ? 'Update Candidate'
+              : 'Add Candidate'
+            }}
+
           </button>
 
         </div>
@@ -74,7 +92,8 @@
         <div
           class="candidate-card"
           *ngFor="
-            let candidate of candidates
+            let candidate of candidates;
+            trackBy: trackByCandidate
           "
         >
 
@@ -90,6 +109,7 @@
             {{ candidate.experience }}
           </p>
 
+          <!-- SKILLS -->
           <div class="skills">
 
             <span
@@ -101,20 +121,42 @@
             </span>
 
           </div>
-          <button
-            class="edit-btn"
-            (click)="editCandidate(candidate)"
-            >
-            Edit
-        </button>
-          <button
-            class="delete-btn"
-            (click)="
-              deleteCandidate(candidate._id)
+
+          <!-- RESUME LINK -->
+          <a
+            *ngIf="candidate.resume"
+            [href]="
+              'http://localhost:5000/' +
+              candidate.resume
             "
+            target="_blank"
+            class="resume-link"
           >
-            Delete
-          </button>
+
+            View Resume
+
+          </a>
+
+          <!-- ACTIONS -->
+          <div class="candidate-actions">
+
+            <button
+              class="edit-btn"
+              (click)="editCandidate(candidate)"
+            >
+              Edit
+            </button>
+
+            <button
+              class="delete-btn"
+              (click)="
+                deleteCandidate(candidate._id)
+              "
+            >
+              Delete
+            </button>
+
+          </div>
 
         </div>
 

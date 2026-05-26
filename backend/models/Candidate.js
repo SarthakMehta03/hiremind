@@ -23,7 +23,10 @@ const candidateSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "Applied"
-  }
+  },
+  resume: {
+  type: String
+},
 
 }, {
   timestamps: true

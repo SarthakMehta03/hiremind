@@ -1,11 +1,14 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ChangeDetectorRef
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule }
+from '@angular/common';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule }
+from '@angular/forms';
 
 import { SidebarComponent }
 from '../../components/sidebar/sidebar';
@@ -15,10 +18,6 @@ from '../../components/navbar/navbar';
 
 import { CandidateService }
 from '../../services/candidate';
-
-import {
-  ChangeDetectorRef
-} from '@angular/core';
 
 @Component({
   selector: 'app-candidates',
@@ -43,19 +42,31 @@ implements OnInit {
   candidates: any[] = [];
 
   name = '';
+
   email = '';
+
   skills = '';
+
   experience = '';
 
- constructor(
+  selectedResume:
+    File | null = null;
 
-  private candidateService:
-  CandidateService,
+  resumePath = '';
 
-  private cdr:
-  ChangeDetectorRef
+  editingCandidateId = '';
 
-) {}
+  isEditing = false;
+
+  constructor(
+
+    private candidateService:
+    CandidateService,
+
+    private cdr:
+    ChangeDetectorRef
+
+  ) {}
 
   ngOnInit(): void {
 
@@ -63,135 +74,183 @@ implements OnInit {
 
   }
 
-  // FETCH
+  // FETCH CANDIDATES
   fetchCandidates() {
 
-  this.candidateService
-  .getCandidates()
-  .subscribe({
+    this.candidateService
+    .getCandidates()
+    .subscribe({
 
-    next: (res: any) => {
+      next: (res: any) => {
 
-      this.candidates = res;
+        this.candidates = res;
 
-      // FORCE UI REFRESH
-      this.cdr.detectChanges();
+        // FORCE UI REFRESH
+        this.cdr.detectChanges();
 
-    },
+      },
 
-    error: (err) => {
+      error: (err) => {
 
-      console.log(err);
+        console.log(err);
+
+      }
+
+    });
+
+  }
+
+  // CREATE CANDIDATE
+  createCandidate() {
+
+    // IF RESUME EXISTS
+    if (this.selectedResume) {
+
+      this.candidateService
+      .uploadResume(
+        this.selectedResume
+      )
+      .subscribe({
+
+        next: (uploadRes: any) => {
+
+          this.resumePath =
+            uploadRes.filePath;
+
+          // AUTO-FILL SKILLS
+          this.skills =
+            uploadRes.extractedSkills.join(',');
+
+          this.saveCandidate();
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+        }
+
+      });
 
     }
 
-  });
+    else {
 
-}
+      this.saveCandidate();
 
-  // CREATE
-  createCandidate() {
-
-  const candidateData = {
-
-    name: this.name,
-
-    email: this.email,
-
-    skills:
-      this.skills.split(','),
-
-    experience:
-      this.experience
-
-  };
-
-  // UPDATE
-  if (this.isEditing) {
-
-    this.candidateService
-    .updateCandidate(
-
-      this.editingCandidateId,
-
-      candidateData
-
-    )
-    .subscribe({
-
-      next: () => {
-
-        alert(
-          'Candidate Updated'
-        );
-
-        this.fetchCandidates();
-
-        this.resetForm();
-
-      },
-
-      error: (err) => {
-
-        console.log(err);
-
-      }
-
-    });
+    }
 
   }
 
-  // CREATE
-  else {
+  // SAVE CANDIDATE
+  saveCandidate() {
 
-    this.candidateService
-    .createCandidate(candidateData)
-    .subscribe({
+    const candidateData = {
 
-      next: () => {
+      name: this.name,
 
-        alert(
-          'Candidate Added'
-        );
+      email: this.email,
 
-        this.fetchCandidates();
+      skills:
+        this.skills.split(','),
 
-        this.resetForm();
+      experience:
+        this.experience,
 
-      },
+      resume:
+        this.resumePath
 
-      error: (err) => {
+    };
 
-        console.log(err);
+    // UPDATE
+    if (this.isEditing) {
 
-      }
+      this.candidateService
+      .updateCandidate(
 
-    });
+        this.editingCandidateId,
+
+        candidateData
+
+      )
+      .subscribe({
+
+        next: () => {
+
+          alert(
+            'Candidate Updated'
+          );
+
+          this.fetchCandidates();
+
+          this.resetForm();
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+        }
+
+      });
+
+    }
+
+    // CREATE
+    else {
+
+      this.candidateService
+      .createCandidate(candidateData)
+      .subscribe({
+
+        next: () => {
+
+          alert(
+            'Candidate Added'
+          );
+
+          this.fetchCandidates();
+
+          this.resetForm();
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+        }
+
+      });
+
+    }
 
   }
 
-}
-
-  editingCandidateId = '';
-
-  isEditing = false;
-
+  // EDIT
   editCandidate(candidate: any) {
 
-  this.isEditing = true;
+    this.isEditing = true;
 
-  this.editingCandidateId =
-    candidate._id;
+    this.editingCandidateId =
+      candidate._id;
 
-  this.name = candidate.name;
+    this.name =
+      candidate.name;
 
-  this.email = candidate.email;
+    this.email =
+      candidate.email;
 
-  this.skills =
-    candidate.skills.join(',');
+    this.skills =
+      candidate.skills.join(',');
 
-  this.experience =
-    candidate.experience;
+    this.experience =
+      candidate.experience;
+
+    this.resumePath =
+      candidate.resume;
 
   }
 
@@ -222,21 +281,43 @@ implements OnInit {
 
   }
 
-  // RESET
+  // FILE SELECT
+  onFileSelected(event: any) {
+
+    this.selectedResume =
+      event.target.files[0];
+
+  }
+
+  // RESET FORM
   resetForm() {
 
-  this.name = '';
+    this.name = '';
 
-  this.email = '';
+    this.email = '';
 
-  this.skills = '';
+    this.skills = '';
 
-  this.experience = '';
+    this.experience = '';
 
-  this.isEditing = false;
+    this.selectedResume = null;
 
-  this.editingCandidateId = '';
+    this.resumePath = '';
 
-}
+    this.isEditing = false;
+
+    this.editingCandidateId = '';
+
+  }
+
+  // TRACK BY
+  trackByCandidate(
+    index: number,
+    candidate: any
+  ) {
+
+    return candidate._id;
+
+  }
 
 }

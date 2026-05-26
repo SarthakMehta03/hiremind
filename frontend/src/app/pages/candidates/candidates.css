@@ -8,6 +8,8 @@
 
 }
 
+/* MAIN */
+
 .candidate-main {
 
   flex: 1;
@@ -18,11 +20,15 @@
 
 }
 
+/* PAGE */
+
 .candidate-page {
 
   padding: 30px;
 
 }
+
+/* HEADER */
 
 .page-header {
 
@@ -36,15 +42,19 @@
 
   font-size: 32px;
 
+  color: #111827;
+
 }
 
 .page-header p {
+
+  margin-top: 6px;
 
   color: #6b7280;
 
 }
 
-/* FORM */
+/* FORM CARD */
 
 .form-card {
 
@@ -61,6 +71,16 @@
 
 }
 
+.form-card h2 {
+
+  margin-bottom: 20px;
+
+  color: #111827;
+
+}
+
+/* FORM */
+
 .candidate-form {
 
   display: grid;
@@ -68,7 +88,7 @@
   grid-template-columns:
     repeat(auto-fit, minmax(220px, 1fr));
 
-  gap: 15px;
+  gap: 18px;
 
 }
 
@@ -76,13 +96,37 @@
 
   padding: 14px;
 
-  border-radius: 10px;
+  border-radius: 12px;
 
   border: 1px solid #d1d5db;
 
   outline: none;
 
+  font-size: 14px;
+
+  transition: 0.3s;
+
 }
+
+.candidate-form input:focus {
+
+  border-color: #2563eb;
+
+}
+
+/* FILE INPUT */
+
+.candidate-form input[type="file"] {
+
+  padding: 10px;
+
+  background: #f9fafb;
+
+  cursor: pointer;
+
+}
+
+/* FORM BUTTON */
 
 .candidate-form button {
 
@@ -92,15 +136,23 @@
 
   border: none;
 
-  border-radius: 10px;
+  border-radius: 12px;
 
   cursor: pointer;
 
   font-weight: 600;
 
+  transition: 0.3s;
+
 }
 
-/* LIST */
+.candidate-form button:hover {
+
+  background: #1d4ed8;
+
+}
+
+/* CANDIDATE LIST */
 
 .candidate-list {
 
@@ -128,13 +180,31 @@
   box-shadow:
     0 4px 12px rgba(0,0,0,0.08);
 
+  transition: 0.3s;
+
+}
+
+.candidate-card:hover {
+
+  transform: translateY(-5px);
+
 }
 
 .candidate-card h3 {
 
   margin-top: 0;
 
+  color: #111827;
+
 }
+
+.candidate-card p {
+
+  color: #6b7280;
+
+}
+
+/* SKILLS */
 
 .skills {
 
@@ -160,13 +230,49 @@
 
   font-size: 13px;
 
+  font-weight: 500;
+
 }
+
+/* RESUME LINK */
+
+.resume-link {
+
+  display: inline-block;
+
+  margin-top: 16px;
+
+  color: #2563eb;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+}
+
+.resume-link:hover {
+
+  text-decoration: underline;
+
+}
+
+/* ACTIONS */
+
+.candidate-actions {
+
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 20px;
+
+}
+
+/* EDIT BUTTON */
 
 .edit-btn {
 
-  margin-top: 15px;
-
-  width: 100%;
+  flex: 1;
 
   padding: 12px;
 
@@ -180,13 +286,23 @@
 
   cursor: pointer;
 
+  font-weight: 600;
+
+  transition: 0.3s;
+
 }
+
+.edit-btn:hover {
+
+  background: #1d4ed8;
+
+}
+
+/* DELETE BUTTON */
 
 .delete-btn {
 
-  margin-top: 20px;
-
-  width: 100%;
+  flex: 1;
 
   padding: 12px;
 
@@ -199,5 +315,27 @@
   border-radius: 10px;
 
   cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+
+}
+
+.delete-btn:hover {
+
+  background: #b91c1c;
+
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .candidate-page {
+
+    padding: 20px;
+
+  }
 
 }

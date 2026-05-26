@@ -91,4 +91,25 @@ export class CandidateService {
 
   }
 
+  uploadResume(file: File) {
+
+  const formData = new FormData();
+
+  formData.append(
+    'resume',
+    file
+  );
+
+  return this.http.post(
+
+    `${this.apiUrl}/upload`,
+
+    formData,
+
+    this.getHeaders()
+
+  );
+
+}
+
 }
