@@ -16,22 +16,28 @@
       <div class="page-header">
 
         <div>
+
           <h1>Job Management</h1>
+
           <p>
             Manage recruitment openings
           </p>
-        </div>
 
-        <button class="header-btn">
-          + Add New Job
-        </button>
+        </div>
 
       </div>
 
       <!-- FORM CARD -->
       <div class="form-card">
 
-        <h2>Create Job</h2>
+        <h2>
+
+          {{ isEditing
+            ? 'Edit Job'
+            : 'Create Job'
+          }}
+
+        </h2>
 
         <div class="job-form">
 
@@ -55,12 +61,25 @@
 
           <input
             type="text"
+            placeholder="Skills Required"
+            [(ngModel)]="skillsRequired"
+          />
+
+          <input
+            type="text"
             placeholder="Salary"
             [(ngModel)]="salary"
           />
 
-          <button (click)="createJob()">
-            Create Job
+          <button
+            (click)="createJob()"
+          >
+
+            {{ isEditing
+              ? 'Update Job'
+              : 'Create Job'
+            }}
+
           </button>
 
         </div>
@@ -85,14 +104,19 @@
 
           <div
             class="job-card"
-            *ngFor="let job of jobs; trackBy: trackByJob"
+            *ngFor="
+              let job of jobs;
+              trackBy: trackByJob
+            "
           >
 
             <div class="job-top">
 
               <div>
 
-                <h3>{{ job.title }}</h3>
+                <h3>
+                  {{ job.title }}
+                </h3>
 
                 <p class="company">
                   {{ job.company }}
@@ -106,6 +130,7 @@
 
             </div>
 
+            <!-- INFO -->
             <div class="job-info">
 
               <p>
@@ -114,14 +139,28 @@
 
             </div>
 
+            <!-- SKILLS -->
+            <div class="skills">
+
+              <span
+                *ngFor="
+                  let skill of job.skillsRequired
+                "
+              >
+                {{ skill }}
+              </span>
+
+            </div>
+
+            <!-- ACTIONS -->
             <div class="job-actions">
 
               <button
                 class="edit-btn"
                 (click)="editJob(job)"
-                >
+              >
                 Edit
-               </button>
+              </button>
 
               <button
                 class="delete-btn"
@@ -129,6 +168,77 @@
               >
                 Delete
               </button>
+
+            </div>
+
+            <!-- AI BUTTON -->
+            <button
+              class="match-btn"
+              (click)="findMatches(job._id)"
+            >
+              Find AI Matches
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- AI MATCH SECTION -->
+      <div
+        class="match-section"
+        *ngIf="
+          matchedCandidates.length > 0
+        "
+      >
+
+        <div class="section-header">
+
+          <h2>
+            AI Candidate Matches
+          </h2>
+
+          <span>
+            {{ matchedCandidates.length }}
+            Candidates
+          </span>
+
+        </div>
+
+        <div class="match-list">
+
+          <div
+            class="match-card"
+            *ngFor="
+              let match of matchedCandidates
+            "
+          >
+
+            <h3>
+              {{ match.candidate.name }}
+            </h3>
+
+            <p>
+              {{ match.candidate.email }}
+            </p>
+
+            <div class="score">
+
+              {{ match.score }}% Match
+
+            </div>
+
+            <div class="skills">
+
+              <span
+                *ngFor="
+                  let skill of
+                  match.matchedSkills
+                "
+              >
+                {{ skill }}
+              </span>
 
             </div>
 

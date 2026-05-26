@@ -22,6 +22,9 @@ app.use("/api/candidates",candidateRoutes);
 const dashboardRoutes = require("./routes/dashboardRoutes");
 app.use("/api/dashboard", dashboardRoutes);
 
+const aiRoutes = require("./routes/aiRoutes");
+app.use("/api/ai",aiRoutes);
+
 app.get("/", (req, res) => {
     res.send("HireMind AI Backend Running");
 });

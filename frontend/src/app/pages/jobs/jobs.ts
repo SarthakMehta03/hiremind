@@ -12,7 +12,10 @@ import { JobService } from '../../services/job';
 import { SidebarComponent } from '../../components/sidebar/sidebar';
 
 import { NavbarComponent } from '../../components/navbar/navbar';
+
 import { ChangeDetectorRef } from '@angular/core';
+
+import { AiService } from '../../services/ai';
 
 @Component({
   selector: 'app-jobs',
@@ -34,17 +37,20 @@ export class JobsComponent
 implements OnInit {
 
   jobs: any[] = [];
-
+  matchedCandidates: any[] = [];
+  selectedJobId = '';
   title = '';
   company = '';
   location = '';
   salary = '';
   editingJobId = '';
  isEditing = false;
+ skillsRequired = '';
 
   constructor(
   private jobService: JobService,
-  private cdr: ChangeDetectorRef
+  private cdr: ChangeDetectorRef,
+  private aiService: AiService
 ) {}
 
   ngOnInit(): void {
@@ -83,12 +89,18 @@ implements OnInit {
 
   const jobData = {
 
-    title: this.title,
-    company: this.company,
-    location: this.location,
-    salary: this.salary
+  title: this.title,
 
-  };
+  company: this.company,
+
+  location: this.location,
+
+  salary: this.salary,
+
+  skillsRequired:
+    this.skillsRequired.split(',')
+
+};
 
   // UPDATE
   if (this.isEditing) {
@@ -177,6 +189,30 @@ implements OnInit {
 
 }
 
+findMatches(jobId: string) {
+
+  this.selectedJobId = jobId;
+
+  this.aiService
+  .getMatches(jobId)
+  .subscribe({
+
+    next: (res: any) => {
+
+      this.matchedCandidates = res;
+
+    },
+
+    error: (err) => {
+
+      console.log(err);
+
+    }
+
+  });
+
+}
+
 editJob(job: any) {
 
   this.isEditing = true;
@@ -206,6 +242,8 @@ resetForm() {
   this.isEditing = false;
 
   this.editingJobId = '';
+
+  this.skillsRequired = '';
 
 }
 
